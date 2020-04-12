@@ -1,17 +1,9 @@
 import { MatchReader } from './MatchReader'
-import { MatchResult } from './MatchResult'
+import { Summary } from './Summary'
 
-const reader = new MatchReader('original.csv')
-reader.read();
+const matchReader = MatchReader.fromCsv('original.csv')
+matchReader.load()
 
-let manWins = 0
+const summary = Summary.winsAnalysisWithHtmlReport('Man United', 'report')
 
-for (const match of reader.data) {
-  if (match[1] === 'Man United' && match[5] === MatchResult.HomeWin) {
-    manWins++
-  } else if (match[2] === 'Man United' && match[5] === MatchResult.AwayWin) {
-    manWins++
-  }
-}
-
-console.log(manWins)
+summary.buildAndPrintReport(matchReader.matches)
